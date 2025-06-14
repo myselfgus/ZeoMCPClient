@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZEO - AI Clinical Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <h1 class="splash-title">ZEO</h1>
+                <div class="splash-underline"></div>
+            </div>
+            <div class="splash-tagline">AI Clinical Assistant</div>
+            <div class="splash-loader">
+                <div class="loader-dots">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="auth-modal hidden" id="authModal">
+        <div class="auth-modal-content">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <h2>ZEO</h2>
+                    <span class="auth-subtitle">Secure Access</span>
+                </div>
+            </div>
+            
+            <!-- Entra ID Auth Form -->
+            <div class="auth-form" id="entraForm">
+                <div class="entra-info">
+                    <div class="entra-icon">
+                        <i data-lucide="building" class="building-icon"></i>
+                    </div>
+                    <h3>Microsoft Entra ID</h3>
+                    <p>Faça login com sua conta organizacional Microsoft para acessar o ZEO de forma segura.</p>
+                </div>
+                
+                <button class="auth-button primary" id="entraLoginButton">
+                    <span class="button-text">Entrar com Microsoft</span>
+                    <i data-lucide="microsoft" class="button-icon"></i>
+                </button>
+                
+                <div class="entra-status hidden" id="entraStatus">
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span>Autenticando com Microsoft...</span>
+                    </div>
+                </div>
+                
+                <div class="auth-divider">informações do login</div>
+                
+                <div class="login-info hidden" id="loginInfo">
+                    <div class="user-avatar" id="userAvatar"></div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName"></div>
+                        <div class="user-email" id="userEmail"></div>
+                        <div class="user-tenant" id="userTenant"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="auth-footer">
+                <p>ZEO AI Clinical Assistant - Seguro & Privado</p>
+            </div>
+        </div>
+        <div class="auth-overlay"></div>
+    </div>
+
+    <!-- Main Application -->
+    <div class="container" id="mainApp">
+        <header class="header">
+            <div class="logo">
+                <h1>ZEO</h1>
+                <span class="tagline">AI Clinical Assistant</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="upload-section" id="uploadSection">
+                <div class="upload-card">
+                    <div class="upload-icon">
+                        <i data-lucide="mic" class="icon-main"></i>
+                    </div>
+                    <h2>Iniciar Gravação ou Enviar Áudio</h2>
+                    <p>Grave sua consulta ou faça upload de um arquivo de áudio</p>
+                    
+                    <div class="upload-options">
+                        <button class="btn-primary" id="recordBtn" aria-label="Iniciar gravação de áudio">
+                            <i data-lucide="mic" class="btn-icon"></i>
+                            Iniciar Gravação
+                        </button>
+                        
+                        <div class="divider">ou</div>
+                        
+                        <label for="audioFile" class="btn-secondary">
+                            <i data-lucide="upload" class="btn-icon"></i>
+                            Selecionar Arquivo
+                        </label>
+                        <input type="file" id="audioFile" accept="audio/*" hidden aria-label="Selecionar arquivo de áudio">
+                    </div>
+                </div>
+            </div>
+
+            <div class="processing-section hidden" id="processingSection">
+                <div class="processing-card">
+                    <div class="processing-header">
+                        <h3>Processando Áudio</h3>
+                        <div class="status-badge" id="statusBadge">Processando...</div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <span class="progress-text" id="progressText">0%</span>
+                    </div>
+                    
+                    <div class="processing-info">
+                        <p>Analisando áudio e gerando transcrição...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-section hidden" id="resultsSection">
+                <div class="results-card">
+                    <div class="results-header">
+                        <h3>Transcrição Completa</h3>
+                        <div class="status-badge success">Concluído</div>
+                    </div>
+                    
+                    <div class="transcription-content" id="transcriptionContent">
+                        <!-- Transcription will be inserted here -->
+                    </div>
+                    
+                    <div class="results-actions">
+                        <button class="btn-secondary" id="newTranscriptionBtn">
+                            <i data-lucide="plus" class="btn-icon"></i>
+                            Nova Transcrição
+                        </button>
+                        <button class="btn-primary" id="exportBtn">
+                            <i data-lucide="download" class="btn-icon"></i>
+                            Exportar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Floating Chat Button -->
+        <div class="chat-toggle" id="chatToggle">
+            <i data-lucide="message-circle" class="chat-icon"></i>
+            <div class="chat-pulse"></div>
+        </div>
+        
+        <!-- Chat Panel -->
+        <div class="chat-panel hidden" id="chatPanel">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <div class="chat-avatar">
+                        <i data-lucide="bot" class="avatar-icon"></i>
+                    </div>
+                    <div class="chat-info">
+                        <h4>ZEO Assistant</h4>
+                        <span class="chat-status">Online</span>
+                    </div>
+                </div>
+                <button class="chat-close" id="chatClose" aria-label="Fechar chat">
+                    <i data-lucide="x" class="close-icon"></i>
+                </button>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot-message">
+                    <div class="message-avatar">
+                        <i data-lucide="bot" class="avatar-icon"></i>
+                    </div>
+                    <div class="message-content">
+                        <p>Olá! Sou o ZEO, seu assistente clínico. Como posso ajudá-lo hoje?</p>
+                        <span class="message-time">Agora</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <div class="chat-input-wrapper">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua mensagem..." autocomplete="off" aria-label="Mensagem do chat">
+                    <button class="chat-send" id="chatSend" aria-label="Enviar mensagem">
+                        <i data-lucide="send" class="send-icon"></i>
+                    </button>
+                </div>
+                <div class="chat-typing hidden" id="chatTyping">
+                    <div class="typing-indicator">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <span class="typing-text">ZEO está digitando...</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Overlay -->
+        <div class="chat-overlay hidden" id="chatOverlay"></div>
+    </div>
+
+    <script src="https://alcdn.msauth.net/browser/2.38.3/js/msal-browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

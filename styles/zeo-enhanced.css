@@ -1,0 +1,448 @@
+/* Enhanced ZEO Styles with GSAP Integration */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Enhanced Splash Screen Styles */
+.zeo-splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zeo-splash-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.splash-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.splash-logo {
+  position: relative;
+}
+
+.splash-title {
+  font-family: var(--font-space-grotesk), "Space Grotesk", sans-serif;
+  font-size: 6rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.08em;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.splash-underline {
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ffffff, transparent);
+  margin: 1rem auto 0;
+  opacity: 0.4;
+}
+
+.splash-tagline {
+  font-family: var(--font-manrope), "Manrope", sans-serif;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.splash-loader {
+  margin-top: 2rem;
+  opacity: 0;
+}
+
+.loader-dots {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+.dot:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.dot:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes pulse-dot {
+  0%,
+  60%,
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  30% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Enhanced Main App Styles */
+.zeo-main-app {
+  opacity: 0;
+  visibility: hidden;
+  min-height: 100vh;
+}
+
+.zeo-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.zeo-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.zeo-logo h1 {
+  font-family: var(--font-space-grotesk), "Space Grotesk", sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.05em;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.zeo-logo h1::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffffff, transparent);
+  opacity: 0.3;
+}
+
+.zeo-tagline {
+  font-family: var(--font-manrope), "Manrope", sans-serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Enhanced Card Styles */
+.zeo-upload-card,
+.zeo-processing-card,
+.zeo-results-card {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px) saturate(120%);
+  border-radius: 0;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(255, 255, 255, 0.03);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.zeo-upload-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 80px rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.zeo-upload-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.01) 0%, rgba(255, 255, 255, 0.02) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.zeo-upload-card:hover::before {
+  opacity: 1;
+}
+
+.zeo-upload-icon {
+  margin-bottom: 2rem;
+}
+
+.zeo-icon-main {
+  width: 48px;
+  height: 48px;
+  color: rgba(255, 255, 255, 0.7);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+}
+
+.zeo-upload-card h2 {
+  font-family: var(--font-space-grotesk), "Space Grotesk", sans-serif;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.zeo-upload-card p {
+  font-family: var(--font-manrope), "Manrope", sans-serif;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 2.5rem;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+/* Enhanced Button Styles */
+.zeo-btn-primary,
+.zeo-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0;
+  font-family: var(--font-manrope), "Manrope", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  min-width: 180px;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.zeo-btn-primary {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.02);
+}
+
+.zeo-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 1);
+}
+
+.zeo-btn-secondary {
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.01);
+}
+
+.zeo-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.zeo-btn-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Recording Button States */
+.zeo-btn-primary.recording {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 1);
+  animation: zeo-pulse 2s infinite;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+}
+
+@keyframes zeo-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.08);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Enhanced Progress Styles */
+.zeo-progress-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.zeo-progress-bar {
+  flex: 1;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.zeo-progress-fill {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 0;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 0%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.zeo-progress-text {
+  font-family: var(--font-manrope), "Manrope", sans-serif;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  min-width: 50px;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+/* Enhanced Status Badge */
+.zeo-status-badge {
+  font-family: var(--font-manrope), "Manrope", sans-serif;
+  padding: 0.5rem 1rem;
+  border-radius: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.zeo-status-badge.success {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Enhanced Transcription Content */
+.zeo-transcription-content {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  border-radius: 0;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: left;
+  line-height: 1.8;
+  font-family: var(--font-manrope), "Manrope", sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  min-height: 300px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.02);
+  position: relative;
+}
+
+.zeo-transcription-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.zeo-transcription-content::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+/* Divider */
+.zeo-divider {
+  font-family: var(--font-manrope), "Manrope", sans-serif;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 400;
+  margin: 1.5rem 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .zeo-container {
+    padding: 1rem;
+  }
+
+  .zeo-upload-card,
+  .zeo-processing-card,
+  .zeo-results-card {
+    padding: 2rem;
+  }
+
+  .zeo-logo h1 {
+    font-size: 2.5rem;
+  }
+
+  .splash-title {
+    font-size: 4rem;
+  }
+}
+
+/* Utility Classes for GSAP */
+.gsap-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.gsap-visible {
+  opacity: 1;
+  visibility: visible;
+}
